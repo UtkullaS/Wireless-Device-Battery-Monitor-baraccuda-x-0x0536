@@ -395,7 +395,7 @@ private:
 };
 
 void PollBarracudaX(PollContext& ctx) {
-    for (USHORT pid : { (USHORT)0x0550, (USHORT)0x0552 }) {
+    for (USHORT pid : { (USHORT)0x0550, (USHORT)0x0552, (USHORT)0x0536 }) {
         if (ctx.IsClaimed(0x1532, pid)) continue;
         const bool macronix = pid == 0x0552;
         const USHORT usage = macronix ? 0x0000 : 0x0001;
@@ -410,7 +410,7 @@ void PollBarracudaX(PollContext& ctx) {
             if (level < 0 || level > 100) continue;
             DeviceStatus s;
             s.key = L"barracuda:" + Hex4(pid);
-            s.name = L"Razer Barracuda X (2022)";
+            s.name = pid == 0x0536 ? L"Razer Barracuda X" : L"Razer Barracuda X (2022)";
             s.kind = DeviceKind::Headset;
             s.via = L"2.4 GHz receiver";
             s.percent = level;
